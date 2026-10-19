@@ -112,6 +112,10 @@ domain ──▶ （不依赖任何业务模块）
 | D4 | `save` 无参数且此前未 read 过文件 | 报 `error: no file specified` |
 | D5 | 读入文件含重复 id | 保留首个，其余视为缺 id 自动补号并警告，不中断读入 |
 | D6 | 含空格的参数 | 一律双引号包裹（含 `set` 的 text 值） |
+| D7 | `group` 新容器的插入位置 | 成员从原父容器摘出后，新 g 插入到**第一个成员**在原父容器中的原位置（保持局部性） |
+| D8 | `set` 作用于容器 g | g 无几何属性：白名单仅公共三项 fill / stroke / stroke-width，几何属性报 unknown attribute |
+| D9 | `create` 参数个数 / 数字非法 | `error: wrong number of arguments for <type>: expected …, got …`；`error: invalid number: <raw>` |
+| D10 | `scale` 作用于 text | 仅 x、y 参与缩放（font-size 不在 set 白名单内，不视为几何属性） |
 
 ---
 
