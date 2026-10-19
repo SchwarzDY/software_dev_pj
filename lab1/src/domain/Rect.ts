@@ -40,6 +40,18 @@ export class Rect extends Shape {
     else super.setAttribute(attr, value);
   }
 
+  protected anchor(): [number, number] {
+    return [this.x, this.y];
+  }
+
+  getAttributeText(attr: string): string | undefined {
+    if (attr === "x") return fmtNum(this.x);
+    if (attr === "y") return fmtNum(this.y);
+    if (attr === "width") return fmtNum(this.width);
+    if (attr === "height") return fmtNum(this.height);
+    return super.getAttributeText(attr);
+  }
+
   protected geometrySummary(): string {
     return `x=${fmtNum(this.x)} y=${fmtNum(this.y)} w=${fmtNum(this.width)} h=${fmtNum(this.height)}`;
   }

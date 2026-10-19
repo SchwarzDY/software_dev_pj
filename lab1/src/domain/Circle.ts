@@ -36,6 +36,17 @@ export class Circle extends Shape {
     else super.setAttribute(attr, value);
   }
 
+  protected anchor(): [number, number] {
+    return [this.cx, this.cy];
+  }
+
+  getAttributeText(attr: string): string | undefined {
+    if (attr === "cx") return fmtNum(this.cx);
+    if (attr === "cy") return fmtNum(this.cy);
+    if (attr === "r") return fmtNum(this.r);
+    return super.getAttributeText(attr);
+  }
+
   protected geometrySummary(): string {
     return `cx=${fmtNum(this.cx)} cy=${fmtNum(this.cy)} r=${fmtNum(this.r)}`;
   }

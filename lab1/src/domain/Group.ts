@@ -1,4 +1,5 @@
 import { Shape } from "./Shape";
+import { fmtNum } from "./num";
 
 /**
  * 容器（Composite 的 Composite 节点）：自身无几何属性，
@@ -14,6 +15,13 @@ export class Group extends Shape {
 
   get typeName(): string {
     return "g";
+  }
+
+  /** 容器的 move 回显用增量而非绝对位置（规范 6.1 示例：moved by (0,100)）。 */
+  moveFeedback(dx: number, dy: number, undoing: boolean): string {
+    const ddx = undoing ? -dx : dx;
+    const ddy = undoing ? -dy : dy;
+    return `${this.ref()} moved ${undoing ? "back by" : "by"} (${fmtNum(ddx)},${fmtNum(ddy)})`;
   }
 
   move(dx: number, dy: number): void {

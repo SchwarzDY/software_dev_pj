@@ -36,6 +36,17 @@ export class Text extends Shape {
     else super.setAttribute(attr, value);
   }
 
+  protected anchor(): [number, number] {
+    return [this.x, this.y];
+  }
+
+  getAttributeText(attr: string): string | undefined {
+    if (attr === "x") return fmtNum(this.x);
+    if (attr === "y") return fmtNum(this.y);
+    if (attr === "text") return this.content;
+    return super.getAttributeText(attr);
+  }
+
   protected geometrySummary(): string {
     return `(${fmtNum(this.x)},${fmtNum(this.y)}) "${this.content}"`;
   }

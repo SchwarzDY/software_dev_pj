@@ -62,6 +62,38 @@ export abstract class Shape {
     return s;
   }
 
+  /** 命令回显里的引用名，如 "circle#c1"。 */
+  ref(): string {
+    return `${this.typeName}#${this.id}`;
+  }
+
+  /** move 命令的回显：叶子报新位置；容器由 Group 覆写为增量。 */
+  moveFeedback(dx: number, dy: number, undoing: boolean): string {
+    const [ax, ay] = this.anchor();
+    return `${this.ref()} moved ${undoing ? "back to" : "to"} (${fmtNum(ax)},${fmtNum(ay)})`;
+  }
+
+  /** 叶子图形的锚点（move 回显用）；容器无锚点。 */
+  protected anchor(): [number, number] {
+    throw new Error("container has no anchor");
+  }
+
+  /** 读取属性当前值（show 显示与 set 的 undo 用）；未设置的外观属性返回 undefined。 */
+  getAttributeText(attr: string): string | undefined {
+    if (attr === "fill") return this.fill;
+    if (attr === "stroke") return this.stroke;
+    if (attr === "stroke-width") return this.strokeWidth === undefined ? undefined : fmtNum(this.strokeWidth);
+    throw new EditorError(`unknown attribute: ${attr}`);
+  }
+
+  /** 清除外观属性（set 的 undo 在属性原先未设置时使用）。 */
+  clearAttribute(attr: string): void {
+    if (attr === "fill") this.fill = undefined;
+    else if (attr === "stroke") this.stroke = undefined;
+    else if (attr === "stroke-width") this.strokeWidth = undefined;
+    else throw new EditorError(`unknown attribute: ${attr}`);
+  }
+
   /** 自身是否挂在 other（或其子孙容器）之下——group 命令的环校验用。 */
   isDescendantOf(other: Group): boolean {
     let p: Group | null = this.parent;

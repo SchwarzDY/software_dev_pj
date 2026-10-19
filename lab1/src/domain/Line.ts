@@ -42,6 +42,18 @@ export class Line extends Shape {
     else super.setAttribute(attr, value);
   }
 
+  protected anchor(): [number, number] {
+    return [this.x1, this.y1];
+  }
+
+  getAttributeText(attr: string): string | undefined {
+    if (attr === "x1") return fmtNum(this.x1);
+    if (attr === "y1") return fmtNum(this.y1);
+    if (attr === "x2") return fmtNum(this.x2);
+    if (attr === "y2") return fmtNum(this.y2);
+    return super.getAttributeText(attr);
+  }
+
   protected geometrySummary(): string {
     return `(${fmtNum(this.x1)},${fmtNum(this.y1)}) -> (${fmtNum(this.x2)},${fmtNum(this.y2)})`;
   }

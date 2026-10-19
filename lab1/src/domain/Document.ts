@@ -25,10 +25,13 @@ export class Document {
     return s;
   }
 
-  /** 登记 id（create/group 命令在全部校验通过后的最后一步调用）。 */
+  /** 登记 id；容器连带其全部子孙一并入索引（delete 的 undo 整树恢复时需要）。 */
   register(shape: Shape): void {
     if (this.byId.has(shape.id)) throw new EditorError(`id already exists: ${shape.id}`);
     this.byId.set(shape.id, shape);
+    if (shape instanceof Group) {
+      for (const d of shape.descendants()) this.byId.set(d.id, d);
+    }
   }
 
   /** 摘除 id；容器连带其全部子孙一并出索引（delete 容器时索引保持一致）。 */
