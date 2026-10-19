@@ -94,6 +94,12 @@ export abstract class Shape {
     else throw new EditorError(`unknown attribute: ${attr}`);
   }
 
+  /** show 的几何属性行；容器无几何属性时返回 undefined。 */
+  geometryLine(): string | undefined {
+    const s = this.geometrySummary();
+    return s === "" ? undefined : "  " + s;
+  }
+
   /** 自身是否挂在 other（或其子孙容器）之下——group 命令的环校验用。 */
   isDescendantOf(other: Group): boolean {
     let p: Group | null = this.parent;

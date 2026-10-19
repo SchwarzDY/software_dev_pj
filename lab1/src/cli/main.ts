@@ -1,27 +1,24 @@
-// M0 骨架：仅保证 REPL 可启动（banner / 提示符 / 注释 / 退出）。
-// 命令分词与分发将在 M4 重构为 Repl / Dispatcher 等类。
+// REPL 入口：读行 → Dispatcher 执行 → 打印输出。终端交互只出现在本模块。
 import * as readline from "node:readline";
 import { stdin, stdout } from "node:process";
+import { Dispatcher } from "./Dispatcher";
 
 const BANNER = "svg-editor 0.1 — type 'help' for commands";
 const PROMPT = "svg> ";
 
-const rl = readline.createInterface({ input: stdin, output: stdout, prompt: PROMPT });
+const dispatcher = new Dispatcher();
 
 stdout.write(BANNER + "\n");
+const rl = readline.createInterface({ input: stdin, output: stdout, prompt: PROMPT });
 rl.prompt();
 
 rl.on("line", (line: string) => {
-  const text = line.trim();
-  if (text === "" || text.startsWith("#")) {
-    // 空行与 # 注释：不响应
-  } else if (text === "quit" || text === "exit") {
+  const trimmed = line.trim();
+  if (trimmed === "quit" || trimmed === "exit") {
     rl.close();
     return;
-  } else {
-    const first = text.split(/\s+/)[0] ?? "";
-    console.log(`error: unknown command: ${first} (type 'help')`);
   }
+  for (const out of dispatcher.execute(trimmed)) console.log(out);
   rl.prompt();
 });
 
