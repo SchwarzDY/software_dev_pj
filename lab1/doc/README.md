@@ -116,6 +116,10 @@ domain ──▶ （不依赖任何业务模块）
 | D8 | `set` 作用于容器 g | g 无几何属性：白名单仅公共三项 fill / stroke / stroke-width，几何属性报 unknown attribute |
 | D9 | `create` 参数个数 / 数字非法 | `error: wrong number of arguments for <type>: expected …, got …`；`error: invalid number: <raw>` |
 | D10 | `scale` 作用于 text | 仅 x、y 参与缩放（font-size 不在 set 白名单内，不视为几何属性） |
+| D11 | undo / redo 栈空时 | `error: nothing to undo` / `error: nothing to redo` |
+| D12 | `ungroup` 作用于非容器 | `error: not a container: <id>`（复用 4.2 既有措辞） |
+| D13 | `addto` 把容器移进自身或其子孙（成环） | `error: cannot move a container into its own descendant: <id>` |
+| D14 | 规范未定义的回显文案 | set 的文本内容值带引号回显（`text="…"`，与规范示例一致）；其余 undo 回显按"动词过去式 + 还原到哪"自拟（create 的 undo 为 `… removed`、group 为 `… removed, N shapes restored`、ungroup 为 `… ungrouped, N children promoted` / `… restored` 等） |
 
 ---
 
