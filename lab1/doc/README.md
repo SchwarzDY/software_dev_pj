@@ -120,6 +120,9 @@ domain ──▶ （不依赖任何业务模块）
 | D12 | `ungroup` 作用于非容器 | `error: not a container: <id>`（复用 4.2 既有措辞） |
 | D13 | `addto` 把容器移进自身或其子孙（成环） | `error: cannot move a container into its own descendant: <id>` |
 | D14 | 规范未定义的回显文案 | set 的文本内容值带引号回显（`text="…"`，与规范示例一致）；其余 undo 回显按"动词过去式 + 还原到哪"自拟（create 的 undo 为 `… removed`、group 为 `… removed, N shapes restored`、ungroup 为 `… ungrouped, N children promoted` / `… restored` 等） |
+| D15 | canvas / init 的回显与非法参数 | 修改尺寸回 `canvas set to <W>x<H>`（随后进入 IO 锁）；尺寸非正数报 `error: canvas size must be positive`；参数个数不符统一报 `error: usage: <语法>` |
+| D16 | tree 的属性对齐 | 属性列 = 全树最长的「前缀 + 名字」末列 + 2；容器行无摘要不加填充。注：规范 6.1 示例自身列宽不一致（且未显示 line 的 stroke），按统一规则输出；第 5.1 节与第 6 节的两棵树与规范逐字一致 |
+| D17 | read 的宽容规则 | 未支持的元素整棵跳过并警告 `warning: skipped unsupported element <tag>`；重复 id 按"缺 id"规则补号并警告；缺失/非法几何属性按 0；画布尺寸缺 width/height 时取 viewBox，仍缺则 800x600 |
 
 ---
 
