@@ -1,6 +1,7 @@
 # Lab1 Phase 1：SVG 编辑器（CLI）— 设计文档
 
-> 工程根目录：`lab1/`；运行方式：`npm install && npm run cli`。
+> **Git 仓库**：<https://github.com/SchwarzDY/software_dev_pj>（最终提交打有 `final` 标签，工程根目录为 `lab1/`）
+> **运行方式**：`lab1/` 目录下执行 `npm install && npm run cli`；测试：`npm test`（42 例）。
 
 ## 架构方案
 
